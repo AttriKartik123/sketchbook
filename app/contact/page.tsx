@@ -52,7 +52,7 @@ export default function ContactPage() {
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-light text-gray-900 mb-4">Get in Touch</h1>
           <p className="text-xl text-gray-700 max-w-2xl mx-auto">
-            Ready to bring your vision to life? Let's discuss your next artistic project.
+            Ready to bring your vision to life? Let&apos;s discuss your next artistic project.
           </p>
         </div>
       </section>
@@ -67,7 +67,7 @@ export default function ContactPage() {
 
               {isSubmitted && (
                 <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                  <p className="text-green-800">Thank you for your message! We'll get back to you within 24 hours.</p>
+                  <p className="text-green-800">Thank you for your message! We&apos;ll get back to you within 24 hours.</p>
                 </div>
               )}
 
@@ -267,7 +267,7 @@ export default function ContactPage() {
                 </p>
               </div>
               <div className="text-left">
-                <h3 className="font-medium text-gray-900 mb-2">What's your commission process?</h3>
+                <h3 className="font-medium text-gray-900 mb-2">What&apos;s your commission process?</h3>
                 <p className="text-gray-600 text-sm">
                   We start with a consultation, create sketches for approval, then complete the final artwork.
                 </p>

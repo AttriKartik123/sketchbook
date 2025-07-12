@@ -34,7 +34,7 @@ const sampleProducts = [
   {
     id: "2",
     title: "Nature Studies",
-    image: "/Final3.png?height=400&width=400",
+    image: "/Final90.png?height=400&width=400",
     category: "Drawings",
     price: "$35",
   },

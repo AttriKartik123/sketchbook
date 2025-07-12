@@ -39,7 +39,7 @@ const getBlogPost = (id: string) => {
 
         <p>Remember, every artist has their own style. While it's important to learn the fundamentals, don't be afraid to develop your unique approach to capturing the human form.</p>
       `,
-      image: "/placeholder.svg?height=600&width=800",
+      image: "/art1.jpg?height=600&width=800",
       author: "Kartik Artist",
       date: "December 15, 2024",
       category: "Tutorial",
@@ -93,7 +93,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
 
             {/* Featured Image */}
             <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden mb-12">
-              <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
+              <Image src={post.image || "/art3.jpg"} alt={post.title} fill className="object-cover" />
             </div>
 
             {/* Social Actions */}
@@ -133,7 +133,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
                 >
                   <div className="relative h-48">
                     <Image
-                      src="/placeholder.svg?height=200&width=400"
+                      src="/art4.jpg?height=200&width=400"
                       alt="Related post"
                       fill
                       className="object-cover"

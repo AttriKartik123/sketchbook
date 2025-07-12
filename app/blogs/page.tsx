@@ -22,7 +22,7 @@ const blogPosts: BlogPost[] = [
     title: "The Art of Portrait Sketching: Tips for Beginners",
     excerpt:
       "Learn the fundamental techniques for creating stunning portrait sketches. From understanding facial proportions to mastering shading techniques, this guide will help you start your artistic journey.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/art1.jpg?height=400&width=600",
     author: "Kartik Artist",
     date: "December 15, 2024",
     category: "Tutorial",
@@ -33,7 +33,7 @@ const blogPosts: BlogPost[] = [
     title: "Finding Inspiration in Everyday Moments",
     excerpt:
       "Discover how to find artistic inspiration in the world around you. From morning coffee rituals to evening walks, learn to see the extraordinary in the ordinary.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/art2.jpg?height=400&width=600",
     author: "Kartik Artist",
     date: "December 10, 2024",
     category: "Inspiration",
@@ -44,7 +44,7 @@ const blogPosts: BlogPost[] = [
     title: "The Story Behind Custom Commissions",
     excerpt:
       "Take a behind-the-scenes look at the process of creating custom artwork. From initial consultation to final delivery, see how personal stories become timeless art.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/art3.jpg?height=400&width=600",
     author: "Kartik Artist",
     date: "December 5, 2024",
     category: "Process",
@@ -55,7 +55,7 @@ const blogPosts: BlogPost[] = [
     title: "Choosing the Right Paper for Your Sketches",
     excerpt:
       "Not all paper is created equal. Learn about different paper types, textures, and weights to find the perfect surface for your artistic vision.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/art4.jpg?height=400&width=600",
     author: "Kartik Artist",
     date: "November 28, 2024",
     category: "Materials",
@@ -66,7 +66,7 @@ const blogPosts: BlogPost[] = [
     title: "The Psychology of Art: Why We Connect with Sketches",
     excerpt:
       "Explore the emotional connection between viewer and artwork. Understand why hand-drawn sketches have a unique power to move and inspire us.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/art5.jpg?height=400&width=600",
     author: "Kartik Artist",
     date: "November 20, 2024",
     category: "Psychology",
@@ -77,7 +77,7 @@ const blogPosts: BlogPost[] = [
     title: "Caring for Your Artwork: Preservation Tips",
     excerpt:
       "Learn how to properly care for and preserve your sketches and drawings. From framing to storage, ensure your artwork lasts for generations.",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/art6.jpg?height=400&width=600",
     author: "Kartik Artist",
     date: "November 15, 2024",
     category: "Care",

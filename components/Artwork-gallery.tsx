@@ -55,7 +55,7 @@ function ArtworkCard({ artwork }: ArtworkCardProps) {
   return (
     <div className="group">
       <div className={`relative overflow-hidden rounded-2xl p-8 ${getBackgroundClass(artwork.setting)} mb-6`}>
-        <div className="aspect-[4/3] relative">
+        <div className="aspect-[1/1] relative">
           <Image
             src={artwork.image || "/placeholder.svg"}
             alt={artwork.title}

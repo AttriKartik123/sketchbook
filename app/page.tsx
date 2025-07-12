@@ -9,41 +9,41 @@ import { Footer } from "../components/Footer"
 const sampleArtworks = [
   {
     id: "1",
-    title: "Side Table",
+    title: "Nature's Empress",
     image: "/Final1.png?height=400&width=600",
-    setting: "green" as const,
-    description: "Beautiful pencil sketch artwork perfect for any living space.",
+    setting: "warm" as const,
+    description: "Regal and wild, a fusion of feminine strength and organic flow.",
   },
   {
     id: "2",
-    title: "Side Table",
+    title: "Moonlit Grace",
     image: "/Final2.png?height=400&width=600",
     setting: "neutral" as const,
-    description: "Elegant portrait sketch that adds character to your home.",
+    description: "A celestial figure bathed in the soft glow of moonlight and pencil.",
   },
 ]
 
 const sampleProducts = [
   {
     id: "1",
-    title: "Portrait Collection",
+    title: "Timeless Muse ",
     image: "/mockup_1.jpeg?height=400&width=400",
     category: "Sketches",
-    price: "$45",
+    price: "₹1800",
   },
   {
     id: "2",
-    title: "Nature Studies",
+    title: "Mystic Gaze",
     image: "/Final90.png?height=400&width=400",
     category: "Drawings",
-    price: "$35",
+    price: "₹1300",
   },
   {
     id: "3",
-    title: "Custom Portraits",
+    title: "Stardust Maiden",
     image: "/mockup_2.png?height=400&width=400",
     category: "Commission",
-    price: "From $80",
+    price: "₹1500",
   },
 ]
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { useState } from "react"
@@ -28,7 +29,7 @@ const allProducts: Product[] = [
     title: "Elegant Portrait Study",
     price: 45,
     originalPrice: 60,
-    image: "/placeholder.svg?height=400&width=400",
+    image: "/Final4.png?height=400&width=400",
     category: "Portraits",
     description: "A beautiful pencil portrait capturing delicate features and emotions.",
     inStock: true,
@@ -39,7 +40,7 @@ const allProducts: Product[] = [
     id: "2",
     title: "Nature's Serenity",
     price: 35,
-    image: "/placeholder.svg?height=400&width=400",
+    image: "/Final5.png?height=400&width=400",
     category: "Landscapes",
     description: "Peaceful landscape sketch showcasing natural beauty and tranquility.",
     inStock: true,
@@ -50,7 +51,7 @@ const allProducts: Product[] = [
     id: "3",
     title: "Custom Pet Portrait",
     price: 80,
-    image: "/placeholder.svg?height=400&width=400",
+    image: "/Final6.png?height=400&width=400",
     category: "Custom",
     description: "Personalized pet portrait created from your favorite photo.",
     inStock: true,

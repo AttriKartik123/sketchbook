@@ -37,8 +37,8 @@ const allProducts: Product[] = [
   {
     id: "1",
     title: "Elegant Portrait Study",
-    price: 45,
-    originalPrice: 60,
+    price: 1599,
+    originalPrice: 1899,
     image: "/Final4.png?height=400&width=400",
     category: "Portraits",
     description: "A beautiful pencil portrait capturing delicate features and emotions.",
@@ -49,7 +49,7 @@ const allProducts: Product[] = [
   {
     id: "2",
     title: "Nature's Serenity",
-    price: 35,
+    price: 1399,
     image: "/FinalA.png?height=400&width=400",
     category: "Landscapes",
     description: "Peaceful landscape sketch showcasing natural beauty and tranquility.",
@@ -60,7 +60,7 @@ const allProducts: Product[] = [
   {
     id: "3",
     title: "Custom Pet Portrait",
-    price: 80,
+    price: 1499,
     image: "/Final770.png?height=400&width=400",
     category: "Custom",
     description: "Personalized pet portrait created from your favorite photo.",
@@ -71,7 +71,7 @@ const allProducts: Product[] = [
   {
     id: "4",
     title: "Abstract Expression",
-    price: 55,
+    price: 1399,
     image: "/Final8.png?height=400&width=400",
     category: "Abstract",
     description: "Modern abstract sketch with flowing lines and dynamic composition.",
@@ -82,7 +82,7 @@ const allProducts: Product[] = [
   {
     id: "5",
     title: "Botanical Study",
-    price: 30,
+    price: 1899,
     image: "/mockup4.jpg?height=400&width=400",
     category: "Nature",
     description: "Detailed botanical illustration of delicate flowers and leaves.",
@@ -93,7 +93,7 @@ const allProducts: Product[] = [
   {
     id: "6",
     title: "Urban Architecture",
-    price: 40,
+    price: 1999,
     image: "/FinalDE.png?height=400&width=400",
     category: "Architecture",
     description: "Architectural sketch capturing the essence of urban design.",
@@ -104,7 +104,7 @@ const allProducts: Product[] = [
   {
     id: "7",
     title: "Family Portrait Commission",
-    price: 120,
+    price: 1259,
     image: "/Final10.png?height=400&width=400",
     category: "Custom",
     description: "Custom family portrait capturing precious moments and relationships.",
@@ -115,7 +115,7 @@ const allProducts: Product[] = [
   {
     id: "8",
     title: "Still Life Collection",
-    price: 25,
+    price: 1499,
     image: "/mockup3.jpg?height=400&width=400",
     category: "Still Life",
     description: "Classic still life study with everyday objects and careful shading.",
@@ -333,7 +333,7 @@ function ProductCard({ product, viewMode }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false)
   const [adding, setAdding] = useState(false)
 
-  const incrementCartCount = useCartStore((state) => state.increment) // ✅ Zustand hook
+  const incrementCartCount = useCartStore((state) => state.increment)
 
   const addToCart = async () => {
     setAdding(true)
@@ -362,7 +362,7 @@ function ProductCard({ product, viewMode }: ProductCardProps) {
       console.error("Cart insert error:", error.message)
     } else {
       toast.success(`${product.title} added to cart`)
-      incrementCartCount() // ✅ ✅ ✅ UPDATE ZUSTAND COUNT HERE
+      incrementCartCount() 
     }
   }
 
@@ -387,9 +387,9 @@ function ProductCard({ product, viewMode }: ProductCardProps) {
         <h3 className="text-lg font-medium text-gray-900">{product.title}</h3>
         <p className="text-sm text-gray-500">{product.category}</p>
         <div className="flex items-center gap-2 my-2">
-          <span className="text-xl font-semibold">${product.price}</span>
+          <span className="text-xl font-semibold">₹{product.price}</span>
           {product.originalPrice && (
-            <span className="line-through text-sm text-gray-400">${product.originalPrice}</span>
+            <span className="line-through text-sm text-gray-400">₹{product.originalPrice}</span>
           )}
         </div>
         <div className="flex gap-2">

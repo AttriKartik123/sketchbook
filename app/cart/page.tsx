@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
 "use client"
 
-import { useState } from "react"
-import { Header } from "../../components/Header"
+import { useEffect, useState } from "react"
+import { supabase } from "@/lib/supabase"
+import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart, Plus, Minus, X } from "lucide-react"
@@ -10,6 +10,7 @@ import Image from "next/image"
 
 interface CartItem {
   id: string
+  product_id: string
   title: string
   image: string
   price: number
@@ -17,38 +18,48 @@ interface CartItem {
   category: string
 }
 
-const initialCartItems: CartItem[] = [
-  {
-    id: "1",
-    title: "Portrait Collection",
-    image: "/placeholder.svg?height=400&width=400",
-    price: 45,
-    quantity: 1,
-    category: "Sketches",
-  },
-  {
-    id: "2",
-    title: "Nature Studies",
-    image: "/placeholder.svg?height=400&width=400",
-    price: 35,
-    quantity: 2,
-    category: "Drawings",
-  },
-]
-
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>(initialCartItems)
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const updateQuantity = (id: string, newQuantity: number) => {
-    if (newQuantity === 0) {
-      removeFromCart(id)
-      return
-    }
-    setCartItems((items) => items.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
+  const fetchCartItems = async () => {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+
+    const { data, error } = await supabase
+      .from("cart_items")
+      .select("*")
+      .eq("user_id", user.id)
+
+    if (error) console.error("Failed to fetch cart:", error)
+    else setCartItems(data)
+    setLoading(false)
   }
 
-  const removeFromCart = (id: string) => {
-    setCartItems((items) => items.filter((item) => item.id !== id))
+  useEffect(() => {
+    fetchCartItems()
+  }, [])
+
+  const updateQuantity = async (id: string, newQuantity: number) => {
+    if (newQuantity === 0) return removeFromCart(id)
+
+    const { error } = await supabase
+      .from("cart_items")
+      .update({ quantity: newQuantity })
+      .eq("id", id)
+
+    if (!error) {
+      setCartItems(items =>
+        items.map(item => item.id === id ? { ...item, quantity: newQuantity } : item)
+      )
+    }
+  }
+
+  const removeFromCart = async (id: string) => {
+    const { error } = await supabase.from("cart_items").delete().eq("id", id)
+    if (!error) {
+      setCartItems(items => items.filter(item => item.id !== id))
+    }
   }
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
@@ -56,8 +67,7 @@ export default function CartPage() {
   const total = subtotal + shipping
 
   const handleCheckout = () => {
-    // Handle checkout logic here
-    console.log("Proceeding to checkout")
+    console.log("Proceeding to checkout", cartItems)
   }
 
   return (
@@ -72,7 +82,9 @@ export default function CartPage() {
             <span className="text-gray-500">({cartItems.length} items)</span>
           </div>
 
-          {cartItems.length === 0 ? (
+          {loading ? (
+            <p>Loading cart...</p>
+          ) : cartItems.length === 0 ? (
             <div className="text-center py-16">
               <ShoppingCart className="h-16 w-16 text-gray-300 mx-auto mb-4" />
               <h2 className="text-2xl font-light text-gray-600 mb-4">Your cart is empty</h2>
@@ -83,13 +95,12 @@ export default function CartPage() {
             </div>
           ) : (
             <div className="grid lg:grid-cols-3 gap-8">
-              {/* Cart Items */}
               <div className="lg:col-span-2">
                 <div className="space-y-4">
                   {cartItems.map((item) => (
                     <div key={item.id} className="bg-white border border-gray-200 rounded-lg p-4 flex gap-4">
                       <Image
-                        src={item.image || "/placeholder.svg"}
+                        src={item.image}
                         alt={item.title}
                         width={120}
                         height={120}
@@ -136,7 +147,6 @@ export default function CartPage() {
                 </div>
               </div>
 
-              {/* Order Summary */}
               <div className="lg:col-span-1">
                 <div className="bg-gray-50 rounded-lg p-6 sticky top-4">
                   <h2 className="text-xl font-medium text-gray-900 mb-4">Order Summary</h2>

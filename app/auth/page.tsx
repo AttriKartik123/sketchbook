@@ -1,15 +1,17 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import type React from "react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
+import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function AuthPage() {
+  const router = useRouter()
   const [isLogin, setIsLogin] = useState(true)
   const [formData, setFormData] = useState({
     email: "",
@@ -25,10 +27,64 @@ export default function AuthPage() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle authentication logic here
-    console.log("Form submitted:", formData)
+
+    if (isLogin) {
+      // Login
+      const { error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      })
+
+      if (error) {
+        console.error("Login error:", error.message)
+        alert("Login failed: " + error.message)
+      } else {
+        console.log("Logged in successfully")
+        router.push("/") // Redirect to home
+      }
+    } else {
+      // Signup
+      if (formData.password !== formData.confirmPassword) {
+        return alert("Passwords do not match")
+      }
+
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            full_name: formData.name,
+          },
+        },
+      })
+
+      if (error) {
+        console.error("Signup error:", error.message)
+        alert("Signup failed: " + error.message)
+      } else {
+        console.log("Account created:", data.user)
+        alert("Account created. Check your email for verification.")
+
+        // Insert into profiles table (if user ID exists)
+        if (data.user) {
+          const { error: insertError } = await supabase.from("profiles").insert({
+            id: data.user.id,
+            full_name: formData.name,
+          })
+
+          if (insertError) {
+            console.error("Profile insert error:", insertError.message)
+          } else {
+            console.log("Profile saved!")
+          }
+        }
+
+        // Redirect to home after signup (optional — usually you wait for email verification)
+        router.push("/")
+      }
+    }
   }
 
   return (
@@ -42,7 +98,9 @@ export default function AuthPage() {
               <CardTitle className="text-2xl font-light text-gray-900">
                 {isLogin ? "Welcome Back" : "Create Account"}
               </CardTitle>
-              <p className="text-gray-600">{isLogin ? "Sign in to your account" : "Join our artistic community"}</p>
+              <p className="text-gray-600">
+                {isLogin ? "Sign in to your account" : "Join our artistic community"}
+              </p>
             </CardHeader>
 
             <CardContent>
@@ -120,6 +178,7 @@ export default function AuthPage() {
                 <p className="text-gray-600">
                   {isLogin ? "Don't have an account?" : "Already have an account?"}
                   <button
+                    type="button"
                     onClick={() => setIsLogin(!isLogin)}
                     className="ml-2 text-gray-900 font-medium hover:underline"
                   >

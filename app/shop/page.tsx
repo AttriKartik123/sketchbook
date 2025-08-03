@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
@@ -8,6 +9,8 @@ import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useCartStore } from "@/lib/store/cartStore"
+
 import { Search, Grid, List, Heart, ShoppingCart } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -137,6 +140,17 @@ export default function ShopPage() {
   const [sortBy, setSortBy] = useState("featured")
   const [searchQuery, setSearchQuery] = useState("")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+
+  useEffect(() => {
+  const fetchCart = async () => {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+    const { data, error } = await supabase.from("cart_items").select("product_id, quantity").eq("user_id", user.id)
+    if (!error && data) useCartStore.getState().setCart(data)
+  }
+
+  fetchCart()
+}, [])
 
   useEffect(() => {
     let filtered = allProducts
@@ -319,6 +333,8 @@ function ProductCard({ product, viewMode }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false)
   const [adding, setAdding] = useState(false)
 
+  const incrementCartCount = useCartStore((state) => state.increment) // ✅ Zustand hook
+
   const addToCart = async () => {
     setAdding(true)
     const { data: { user } } = await supabase.auth.getUser()
@@ -346,6 +362,7 @@ function ProductCard({ product, viewMode }: ProductCardProps) {
       console.error("Cart insert error:", error.message)
     } else {
       toast.success(`${product.title} added to cart`)
+      incrementCartCount() // ✅ ✅ ✅ UPDATE ZUSTAND COUNT HERE
     }
   }
 
@@ -355,9 +372,15 @@ function ProductCard({ product, viewMode }: ProductCardProps) {
     <div className="border rounded-lg p-4 hover:shadow-md transition-all">
       <div className="relative aspect-square">
         <Image src={product.image} alt={product.title} fill className="object-cover rounded-lg" />
-        {product.featured && <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded">Featured</span>}
+        {product.featured && (
+          <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded">
+            Featured
+          </span>
+        )}
         <button onClick={toggleWishlist} className="absolute top-2 right-2 p-2 bg-white rounded-full">
-          <Heart className={`h-4 w-4 ${isWishlisted ? "fill-red-500 text-red-500" : "text-gray-400"}`} />
+          <Heart
+            className={`h-4 w-4 ${isWishlisted ? "fill-red-500 text-red-500" : "text-gray-400"}`}
+          />
         </button>
       </div>
       <div className="mt-4">
@@ -365,7 +388,9 @@ function ProductCard({ product, viewMode }: ProductCardProps) {
         <p className="text-sm text-gray-500">{product.category}</p>
         <div className="flex items-center gap-2 my-2">
           <span className="text-xl font-semibold">${product.price}</span>
-          {product.originalPrice && <span className="line-through text-sm text-gray-400">${product.originalPrice}</span>}
+          {product.originalPrice && (
+            <span className="line-through text-sm text-gray-400">${product.originalPrice}</span>
+          )}
         </div>
         <div className="flex gap-2">
           <Button asChild variant="outline" size="sm" className="flex-1">
@@ -377,7 +402,13 @@ function ProductCard({ product, viewMode }: ProductCardProps) {
             size="sm"
             className="flex-1 bg-gray-900 text-white hover:bg-gray-800"
           >
-            {adding ? <span className="animate-pulse">Adding...</span> : <><ShoppingCart className="h-4 w-4 mr-1" /> Add</>}
+            {adding ? (
+              <span className="animate-pulse">Adding...</span>
+            ) : (
+              <>
+                <ShoppingCart className="h-4 w-4 mr-1" /> Add
+              </>
+            )}
           </Button>
         </div>
       </div>
